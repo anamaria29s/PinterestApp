@@ -1,0 +1,164 @@
+﻿@model PinterestApp.Models.ApplicationUser
+@using Microsoft.AspNetCore.Identity
+<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+
+<style>
+    body {
+        background-color: #efefef; 
+    }
+
+    h2 {
+        color: #bd081c; 
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    .card {
+        background-color: white; 
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+    }
+
+        .card:hover {
+            transform: scale(1.02); /* Hover effect for cards */
+        }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .bi {
+        color: #bd081c; 
+    }
+
+    .btn-success {
+        background-color: #bd081c; 
+        border-color: #bd081c;
+        color: white; 
+        transition: background-color 0.3s ease-in-out;
+    }
+
+        .btn-success:hover {
+            background-color: #8c0615; 
+            border-color: #8c0615;
+        }
+</style>
+
+<h2>Profilul Utilizatorului</h2>
+
+<div class="row">
+    <div class="col-3 mb-4">
+        <div class="card">
+            <div class="card-body d-flex justify-content-between flex-column">
+                <div>
+                    <p><i class="bi bi-person"></i> UserName: @Model.UserName</p>
+                    <p><i class="bi bi-bookmark"></i> Colecții utilizator:</p>
+                   @if (Model.Collections != null && Model.Collections.Any())
+                    {
+                        foreach (var collection in Model.Collections)
+                        {
+                         <p>
+                                <a class="btn btn-sm btn-success" href="@Url.Action("Show", "Collections", new { id = collection.Id })">@collection.Name</a>
+                         </p>
+                        }
+                    }
+
+                    else
+                    {
+                        <p>(Utilizatorul nu are colecții)</p>
+                    }
+                     
+                </div>
+
+                @inject SignInManager<ApplicationUser> SignInManager
+                @if (SignInManager.IsSignedIn(User) && Model.Id == SignInManager.UserManager.GetUserId(User))
+                {
+                    <div class="d-flex flex-row justify-content-between p-3">
+                        <div>
+                            <a class="btn btn-sm btn-success" href="/Identity/Account/Manage"> Editare profil</a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+
+    @inject SignInManager<ApplicationUser> SignInManager
+
+    @if (SignInManager.IsSignedIn(User) && Model.Id == SignInManager.UserManager.GetUserId(User))
+    {
+        <div class="col-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex flex-row justify-content-between p-3">
+                        <div>
+                            <a class="btn btn-sm btn-success" href="/Bookmarks/New"> Adăugare bookmark</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex flex-row justify-content-between p-3">
+                        <div>
+                            <a class="btn btn-sm btn-success" href="/Collections/Index">Saved bookmarks in colectii</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-3">
+        </div>
+    }
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <h3>Bookmarks ale utilizatorului</h3>
+        <div class="row">
+            @if (Model.Bookmarks != null && Model.Bookmarks.Any())
+            {
+                foreach (var bookmark in Model.Bookmarks)
+                {
+                    <div class="col-3 mb-4">
+                         <div class="card" style="width: 100%">
+                      
+                            @Html.Partial("BookmarkInfo", bookmark)
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <p>(Utilizatorul nu are bookmark-uri)</p>
+            }
+        </div>
+    </div>
+</div>
+
+
+
+<!-- ... restul codului ... -->
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var grid = document.querySelector('.grid');
+        var masonry = new Masonry(grid, {
+            itemSelector: '.card',
+            columnWidth: '.card',
+            gutter: 20
+        });
+    });
+</script>

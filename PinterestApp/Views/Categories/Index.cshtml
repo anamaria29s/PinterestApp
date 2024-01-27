@@ -1,0 +1,84 @@
+﻿<style>
+    body {
+        background-color: #efefef; 
+    }
+
+    h2 {
+        color: #bd081c; 
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    .card {
+        background-color: white;
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+    }
+
+        .card:hover {
+            transform: scale(1.02); 
+        }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .bi {
+        color: #bd081c; 
+    }
+
+
+        .btn-success:hover {
+            background-color: #8c0615; 
+            border-color: #8c0615;
+        }
+</style>
+
+
+
+@{
+    ViewBag.Title = "Lista categorii";
+}
+<br />
+<h2 class="text-center">@ViewBag.Title</h2>
+<br />
+
+@if (TempData.ContainsKey("message"))
+{
+    <h1>@ViewBag.message</h1>
+}
+
+<br />
+@if (User.IsInRole("Admin"))
+{
+    <div class="align-items-center justify-content-center d-flex">
+        <a class="btn btn-success" style="background-color: #bd081c" href="/Categories/New">Adauga o noua categorie</a>
+
+    </div>
+}
+<br />
+
+
+@foreach (var category in ViewBag.Categories)
+{
+   
+    <p>@category.Name</p>
+    <a class="btn btn-success" href="/Categories/Show/@category.Id">Afisare categorie</a>
+
+    @if (User.IsInRole("Admin"))
+    {
+        <a class="btn btn-success" href="/Categories/Edit/@category.Id">Editare categorie</a>
+    }
+    <br />
+    <hr />
+    <br />
+}
+<br />
+
+

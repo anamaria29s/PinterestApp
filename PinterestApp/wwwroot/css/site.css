@@ -1,0 +1,73 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    background-color: #efefef;
+}
+
+.note-editor .dropdown-toggle::after {
+    display: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+
+
+h2 {
+    color: #bd081c; /* Pinterest red color */
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background-color: white; /* White background for cards */
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+    .card:hover {
+        transform: scale(1.02); /* Hover effect for cards */
+    }
+
+.card-body {
+    padding: 10px;
+}
+
+.bi {
+    color: #bd081c; /* Pinterest red color for icon */
+}
+
+.btn-success {
+    background-color: #bd081c; /* Pinterest red color for buttons */
+    border-color: #bd081c;
+    color: white; /* White text color for buttons */
+    transition: background-color 0.3s ease-in-out;
+}
+
+    .btn-success:hover {
+        background-color: #8c0615; /* Darker shade for hover effect */
+        border-color: #8c0615;
+    }

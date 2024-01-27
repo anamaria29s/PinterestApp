@@ -1,0 +1,182 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+    body {
+        background-color: #efefef; /* Culoare fundal similară cu Pinterest */
+    }
+
+    h2 {
+        color: #bd081c; /* Culoare roșie pentru titluri similară cu Pinterest */
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 5px;
+    }
+
+    .card {
+        background-color: white; /* Fundal alb pentru cărți */
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+    }
+
+        .card:hover {
+            transform: scale(1.02); /* Efect la hover pentru cărți */
+        }
+
+    .card-body {
+        padding: 0; /* Elimină paddingul implicit pentru un control mai bun */
+    }
+
+    .bi {
+        color: #bd081c; /* Culoare roșie pentru icon */
+    }
+
+    .btn-success:hover {
+        background-color: #8c0615; /* Nuanță mai închisă pentru efectul la hover */
+        border-color: #8c0615;
+    }
+
+    .card-content {
+        border-radius: 10px; /* Colțuri rotunjite pentru conținut */
+        overflow: hidden; /* Ascunde overflow-ul pentru a asigura că marginile sunt rotunjite */
+    }
+
+    .card-img {
+        width: 100%; /* Asigură că imaginea ocupă întreaga lățime a cărții */
+        height: 10%; /* Înălțime controlată pentru imagine */
+    }
+
+    .card-body {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .title-column {
+        flex-grow: 1;
+    }
+
+    .like-column, .nrlike-column {
+        flex-shrink: 0;
+        margin-left: 10px;
+    }
+
+    .card-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .btn-like {
+        background-color: #8B0000;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-left: 10px;
+        padding: 5px 10px; 
+    }
+
+    .like-count {
+        color: #bd081c;
+        padding-left: 10px;
+    }
+
+    .categ {
+        color: #bd081c;
+        padding: 10px;
+    }
+
+</style>
+
+<br />
+<form method="GET">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Cauta Bookmarks dupa Titlu, Categorie sau Comentarii" name="search" value="@ViewBag.SearchString">
+        <button class="btn btn btn-success"
+                type="submit">
+            Search
+        </button>
+    </div>
+</form>
+<br />
+
+@if (TempData["message"] != null)
+{
+    <div class="alert @ViewBag.Alert p-3 rounded-3 text-center mb-5">
+        @ViewBag.Message
+    </div>
+}
+
+<br />
+<div class="row">
+    @foreach (PinterestApp.Models.Bookmark bookmark in ViewBag.Bookmarks)
+    {
+        <div class="col-3 mb-4">
+
+
+            <div class="card" style="width:100%">
+
+                @Html.Partial("BookmarkInfo", bookmark)
+
+                <div class="card-container">
+
+                    <form method="post" asp-action="AddLike" asp-route-id="@bookmark.Id">
+                        <button type="submit" class="btn-like">
+                            <i class="bi bi-heart" style="color:white"></i>
+                        </button>
+                    </form>
+
+                    <div class="col nrlike-column">
+                        @if (bookmark.Likes != null)
+                        {
+                            <p class="like-count">@bookmark.Likes.Count()</p>
+                        }
+                        else
+                        {
+                            <p class="like-count">0</p>
+                        }
+                    </div>
+                    <div class="categ">
+                        <div><i class="bi bi-globe"></i> @bookmark.Category.Name</div>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+    }
+</div>
+
+
+
+<div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" href="/Bookmarks/Index?page=1" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            @for (int i = 1; i <= ViewBag.lastPage; i++)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="/Bookmarks/Index?page=@i">@(i)</a>
+                </li>
+            }
+            <li class="page-item">
+                <a class="page-link" href="/Bookmarks/Index?page=@(ViewBag.lastPage)" aria-label="Next">
+
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>

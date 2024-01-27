@@ -1,0 +1,117 @@
+﻿@model PinterestApp.Models.Bookmark
+
+
+<style>
+    body {
+        background-color: #efefef; 
+    }
+
+    h2 {
+        color: #bd081c; 
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 5px;
+    }
+
+    .card {
+        background-color: white;
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+    }
+
+        .card:hover {
+            transform: scale(1.02); 
+        }
+
+    .card-body {
+        padding: 0;
+    }
+
+    .bi {
+        color: #bd081c; 
+    }
+
+    .btn-success:hover {
+        background-color: #8c0615; 
+        border-color: #8c0615;
+    }
+
+    .card-content {
+        border-radius: 10px; 
+        overflow: hidden; 
+    }
+
+    .card-img {
+        width: 100%; 
+    }
+
+    .card-body {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .title-column {
+        flex-grow: 8;
+        margin-left: 10px;
+    }
+
+    .like-column {
+        flex-shrink: 0;
+        margin-left: 8px;
+        margin-right: 0; 
+    }
+
+    .nrlike-column {
+        margin-left: 0;
+        flex-shrink: 0;
+        margin-right: 0; 
+    }
+
+    .card-container {
+        display: flex;
+        align-items: center; 
+    }
+
+    .card-title {
+        color: white;
+        text-decoration: none;
+        background-color: #bd081c;
+        padding: 10px;
+        border-radius: 10px;
+        margin-right: 10px;
+    }
+
+    .btn-like {
+        background-color: #8B0000;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .like-count {
+        color: #bd081c;
+        margin: 0;
+    }
+
+</style>
+
+
+
+
+<div class="card-content">
+    <a href="/Bookmarks/Show/@Model.Id" class="card-link">@Html.Raw(Model.Description)</a>
+    <div class="row">
+        <div class="col title-column">
+           
+            <h5 class="card-title">@Model.Title</h5>
+        </div>
+
+
+    </div>
+</div>

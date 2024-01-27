@@ -1,0 +1,48 @@
+﻿@model PinterestApp.Models.Collection
+
+@if (TempData["message"] != null)
+{
+    <div class="alert @TempData["messageType"] p-3 rounded-3 text-center mb-5">
+        @TempData["message"]
+    </div>
+}
+
+
+<div class="row">
+
+    <div class="col-12">
+        <h5 class="card-title" name="Name">@Model.Name</h5>
+        @if (ViewBag.EsteAdmin)
+        {
+            <i class="bi bi-person"> Creat de: </i> @Model.User.UserName
+
+        }
+
+        <br />
+        <br />
+        Bookmarks in colectie:
+        <br /><br />
+    </div>
+    @if (Model.BookmarkCollections.Count > 0)
+    {
+        foreach (var bookmarkcollection in Model.BookmarkCollections)
+        {
+            <div class="col-3 mb-6">
+                <div class="card" style="width: 100%;">
+                    <div class="card-body">
+                        @Html.Partial("BookmarkInfo", bookmarkcollection.Bookmark)
+
+           
+                        <br />
+                        
+                        @if (bookmarkcollection.Collection.UserId == ViewBag.UserCurent || ViewBag.EsteAdmin)
+                        {
+                            <form method="post" asp-controller="Collections" asp-action="DeleteFromCollection" asp-route-collectionId="@Model.Id" asp-route-bookmarkId="@bookmarkcollection.BookmarkId">
+                                <button class="btn btn-sm btn-danger" type="submit">Șterge din colecție</button>
+                            </form>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    }

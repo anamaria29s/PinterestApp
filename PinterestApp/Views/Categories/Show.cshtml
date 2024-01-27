@@ -1,0 +1,53 @@
+﻿@model PinterestApp.Models.Category
+@{
+    
+}
+
+
+
+
+<br />
+
+
+@if (User.IsInRole("Admin"))
+{
+    <form method="post" action="/Categories/Delete/@Model.Id">
+
+        <button class="btn btn-danger" style="background-color: #bd081c" type="submit">Sterge categoria</button>
+
+    </form>
+
+    <br />
+}
+<div class="row">
+
+    <div class="col-12">
+        <h5 class="card-title" name="Name" sstyle="color: white">@Model.Name</h5>
+    
+        
+        <br /><br />
+    </div>
+
+   @if (Model.Bookmarks.Count > 0)
+{
+        @foreach (var bookmark in Model.Bookmarks)
+        {
+            <div class="col-3 mb-4">
+                <!-- Aici este modificarea -->
+                <div class="card" style="width:100%">
+
+                    @Html.Partial("BookmarkInfo", bookmark)
+
+                  
+
+                </div>
+            </div>
+        }
+}
+
+<a class="btn btn-success" href="/Categories/Index/">Afisare lista categorii</a>
+
+<br />
+<hr />
+<br />
+

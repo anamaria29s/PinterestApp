@@ -1,0 +1,56 @@
+﻿<br />
+<br />
+
+
+<br />
+
+@if (TempData["message"] != null)
+{
+    <div class="alert @ViewBag.Alert p-3 rounded-3 text-center mb-5">
+        @ViewBag.Message
+    </div>
+}
+
+<br />
+
+
+    <a class="btn btn-success rounded-pill mb-5" href="/Collections/New">
+        <i class="bi bi-plus"></i> Adaugare colectie
+    </a>
+
+
+
+
+<div class="row">
+    @foreach (var collection in ViewBag.Collections)
+    {
+        <div class="col-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" name="Name">@collection.Name</h5>
+
+                    @if (ViewBag.EsteAdmin)
+                    {
+                        <div><i class="bi bi-person"> Creat de: </i> @collection.User.UserName</div>
+                    }
+
+                    <br />
+
+                    <a class="btn btn-success" href="/Collections/Show/@collection.Id">Afisare Colectie</a>
+
+                    <br />
+                    <br />
+                    @if (collection.UserId == ViewBag.UserCurent || ViewBag.EsteAdmin)
+                    {
+                        <form method="post" action="/Collections/Delete/@collection.Id">
+                            <button class="btn btn-danger" type="submit">Sterge colectia</button>
+                        </form>
+                        <br />
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
