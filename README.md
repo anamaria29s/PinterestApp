@@ -4,4 +4,5 @@ Designed and implemented a Pinterest-inspired application using ASP.NET and Enti
 
 The application allows users to discover, save, and share content, fostering an interactive online community focused on shared interests.
 
-## [Trello] (https://trello.com/b/LX0iDQum/proiect-daw)
+## Backlog Creation
+We monitorized our backlog creation using Trello. It can be found [here](https://trello.com/b/LX0iDQum/proiect-daw).
